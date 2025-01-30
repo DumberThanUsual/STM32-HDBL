@@ -6,16 +6,6 @@
 
 #include "main.h"
 
-flash_status flash_init()
-{
-    return F_OK;
-}
-
-flash_status flash_deinit()
-{
-    return F_OK;
-}
-
 flash_status flash_unlock()
 {
     FLASH->KEYR = 0x45670123;

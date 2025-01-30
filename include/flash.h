@@ -13,8 +13,6 @@ typedef enum
     F_UNSUPPORTED
 } flash_status;
 
-flash_status flash_init();
-flash_status flash_deinit();
 flash_status flash_unlock();
 flash_status flash_lock();
 flash_status flash_write(uint32_t, uint64_t);

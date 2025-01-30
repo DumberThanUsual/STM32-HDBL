@@ -240,7 +240,6 @@ ymodem_status_t ymodem()
     struct ymodem_state state = {0};
     state.flash_addr = APPLICATION_ADDRESS;
 
-    flash_init();
     flash_unlock();
 
     uart_tx_byte(CRC16);
@@ -253,7 +252,6 @@ ymodem_status_t ymodem()
     }
 
     flash_lock();
-    flash_deinit();
 
     return state.status;
 }
