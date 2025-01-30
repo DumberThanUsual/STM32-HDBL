@@ -8,10 +8,6 @@
 
 #define NUCLEO
 
-/**
- * @brief  Configure UART for 8N1 115200 baud
- * @retval None
- */
 void uart_init() 
 {
     #ifdef NUCLEO

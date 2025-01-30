@@ -42,6 +42,6 @@ int main()
     user_prog_address = *(__IO uint32_t*) (APPLICATION_ADDRESS + 4); // Load program address
     user_program = (pFunction) user_prog_address;
     __set_MSP(*(__IO uint32_t*) APPLICATION_ADDRESS); // Set stack pointer
-    SCB->VTOR = APPLICATION_ADDRESS;
+    SCB->VTOR = APPLICATION_ADDRESS; //Set Vector Table Offset Register
     user_program(); // Jump to program
 }

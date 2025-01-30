@@ -7,18 +7,6 @@
 #include "uart.h"
 #include "systick.h"
 
-void crc_init()
-{
-    return;
-    RCC->AHBENR |= RCC_AHBENR_CRCEN;
-}
-
-void crc_deinit()
-{
-    return;
-    RCC->AHBENR &= ~RCC_AHBENR_CRCEN;
-}
-
 uint16_t crc16(uint8_t *ptr, uint16_t count)
 {
     uint16_t crc = 0;

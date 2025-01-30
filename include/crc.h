@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-void crc_init();
-void crc_deinit();
 uint16_t crc16(uint8_t *data, uint16_t count);
 
 #endif
