@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-#define NUCLEO
+#define NUCLEO 0
 
-#ifdef NUCLEO
+#if NUCLEO
 #define COMPORT USART2
 #else
 #define COMPORT USART1

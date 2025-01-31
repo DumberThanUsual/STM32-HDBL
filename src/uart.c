@@ -6,11 +6,9 @@
 
 #include "systick.h"
 
-#define NUCLEO
-
 void uart_init() 
 {
-    #ifdef NUCLEO
+    #if NUCLEO
 
     RCC->IOPENR |= RCC_IOPENR_GPIOAEN;
 
@@ -28,12 +26,13 @@ void uart_init()
 
     #else
     RCC->IOPENR |= RCC_IOPENR_GPIOBEN;
+
     GPIOB->MODER &= ~GPIO_MODER_MODE6_Msk;
     GPIOB->MODER |= GPIO_MODER_MODE6_1;
-    GPIOB->MODER &= ~GPIO_MODER_MODE7_Msk;
-    GPIOB->MODER |= GPIO_MODER_MODE7_1;
+    GPIOB->OTYPER |= GPIO_OTYPER_OT6;
 
-    RCC->APBENR2 |= RCC_APBENR2_COMPORTEN;
+    RCC->APBENR2 |= RCC_APBENR2_USART1EN;
+    
     COMPORT->CR3 |= USART_CR3_HDSEL;
     COMPORT->BRR |= 139;
     COMPORT->CR1 |= USART_CR1_UE | USART_CR1_TE | USART_CR1_RE;
@@ -43,26 +42,24 @@ void uart_init()
 
 void uart_deinit()
 {
-    #ifdef NUCLEO
+    #if NUCLEO
 
     GPIOB->MODER &= ~GPIO_MODER_MODE7_Msk;
     GPIOB->MODER &= ~GPIO_MODER_MODE6_Msk;
     RCC->IOPENR &= ~RCC_IOPENR_GPIOBEN;
 
     COMPORT->CR1 = 0;
-    COMPORT->CR3 = 0;
     COMPORT->BRR = 0;
     RCC->APBENR1 &= ~RCC_APBENR1_USART2EN;
 
     #else
-    GPIOB->MODER &= ~GPIO_MODER_MODE7_Msk;
     GPIOB->MODER &= ~GPIO_MODER_MODE6_Msk;
     RCC->IOPENR &= ~RCC_IOPENR_GPIOBEN;
 
     COMPORT->CR1 = 0;
     COMPORT->CR3 = 0;
     COMPORT->BRR = 0;
-    RCC->APBENR2 &= ~RCC_APBENR2_COMPORTEN;
+    RCC->APBENR2 &= ~RCC_APBENR2_USART1EN;
     #endif
 }
 
