@@ -34,7 +34,7 @@ flash_status flash_write(uint32_t address, uint64_t data)
     {
         return F_BUSY;
     }
-    FLASH->CR |= FLASH_CR_PG;
+    FLASH->CR |= FLASH_CR_PG | FLASH_CR_EOPIE;
 
     ///TODO: Check if in programming address range
 
@@ -47,7 +47,7 @@ flash_status flash_write(uint32_t address, uint64_t data)
     {
         return F_ERROR;
     }
-    FLASH->SR &= ~FLASH_SR_EOP;
+    FLASH->SR |= FLASH_SR_EOP;
     FLASH->CR &= ~FLASH_CR_PG;
     return F_OK;
 }
@@ -67,7 +67,7 @@ flash_status flash_write_batch(uint32_t address, uint32_t *data, uint32_t length
     {
         return F_BUSY;
     }
-    FLASH->CR |= FLASH_CR_PG;
+    FLASH->CR |= FLASH_CR_PG | FLASH_CR_EOPIE;
 
     for (i = 0; i < length; i += 2)
     {
@@ -76,12 +76,12 @@ flash_status flash_write_batch(uint32_t address, uint32_t *data, uint32_t length
         *(uint32_t *)(address + 4U) = (uint32_t)(data[i + 1]);
 
         while (FLASH->SR & FLASH_SR_CFGBSY);
-        if (!(FLASH->SR & FLASH_SR_EOP) & 0)
+        if (!(FLASH->SR & FLASH_SR_EOP))
         {
             FLASH->CR &= ~FLASH_CR_PG;
             return F_ERROR;
         }
-        FLASH->SR &= ~FLASH_SR_EOP;
+        FLASH->SR |= FLASH_SR_EOP;
         address += 8U;
     }
     
