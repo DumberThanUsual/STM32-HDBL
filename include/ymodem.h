@@ -15,7 +15,7 @@
 #define PACKET_DATA_INDEX       ((uint16_t)3)
 
 #define PACKET_PART_TIMEOUT     ((uint32_t)100)
-#define ENTRY_TIMEOUT           ((uint32_t)1000)
+#define ENTRY_TIMEOUT           ((uint32_t)100)
 
 #define SOH                     ((uint8_t)0x01)  // 128-byte data packet 
 #define STX                     ((uint8_t)0x02)  // 1024-byte data packet 
